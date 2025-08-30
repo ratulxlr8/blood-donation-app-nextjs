@@ -15,7 +15,8 @@ export default function ContactFormCard() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [whatsappContacts, setWhatsappContacts] = useState([]);
+  type WhatsappContact = { whatsappUrl: string; name?: string; phone?: string };
+  const [whatsappContacts, setWhatsappContacts] = useState<WhatsappContact[]>([]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -400,7 +401,7 @@ export default function ContactFormCard() {
         <div className="bg-gradient-to-r from-slate-50 to-orange-50 border-t border-slate-100 px-8 py-6 text-center">
           <div className="flex items-center justify-center space-x-2 text-slate-600">
             <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
-            <p className="text-sm font-medium">We'll respond within 24 hours</p>
+            <p className="text-sm font-medium">{`We'll respond within 24 hours`}</p>
             <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
           </div>
           <p className="text-xs text-slate-500 mt-2">
