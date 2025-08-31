@@ -3,12 +3,14 @@ import { ChangeEvent, useState } from "react";
 
 export default function ContactFormCard() {
   const [formData, setFormData] = useState({
+    contactNumber: "",
     location: "",
     bloodGroup: "",
     message: "",
   });
 
   const [errors, setErrors] = useState({
+    contactNumber: "",
     location: "",
     bloodGroup: "",
     message: "",
@@ -16,7 +18,9 @@ export default function ContactFormCard() {
 
   const [isLoading, setIsLoading] = useState(false);
   type WhatsappContact = { whatsappUrl: string; name?: string; phone?: string };
-  const [whatsappContacts, setWhatsappContacts] = useState<WhatsappContact[]>([]);
+  const [whatsappContacts, setWhatsappContacts] = useState<WhatsappContact[]>(
+    []
+  );
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -38,7 +42,21 @@ export default function ContactFormCard() {
 
   const validateForm = () => {
     let valid = true;
-    const newErrors = { location: "", bloodGroup: "", message: "" };
+    const newErrors = {
+      contactNumber: "",
+      location: "",
+      bloodGroup: "",
+      message: "",
+    };
+
+    // Contact Number validation
+    if (!formData.contactNumber.trim()) {
+      newErrors.contactNumber = "Contact number is required";
+      valid = false;
+    } else if (!/^[\d\s\-\+\(\)]{10,}$/.test(formData.contactNumber)) {
+      newErrors.contactNumber = "Please enter a valid contact number";
+      valid = false;
+    }
 
     // Blood Group validation
     if (!formData.bloodGroup.trim()) {
@@ -96,7 +114,12 @@ export default function ContactFormCard() {
   };
 
   const resetForm = () => {
-    setFormData({ location: "", bloodGroup: "", message: "" });
+    setFormData({
+      contactNumber: "",
+      location: "",
+      bloodGroup: "",
+      message: "",
+    });
     setWhatsappContacts([]);
   };
 
@@ -125,6 +148,43 @@ export default function ContactFormCard() {
         {/* Form Section */}
         <div className="p-8">
           <div className="space-y-6">
+            {/* Contact Number Field */}
+            <div className="group">
+              <label
+                htmlFor="contactNumber"
+                className="block text-sm font-semibold text-slate-800 mb-2 transition-colors group-focus-within:text-orange-600"
+              >
+                Your Contact Number
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <span className="text-slate-500 font-medium">+88</span>
+                </div>
+                <input
+                  type="tel"
+                  id="contactNumber"
+                  name="contactNumber"
+                  value={formData.contactNumber}
+                  onChange={handleChange}
+                  placeholder="01XXXXXXXXX"
+                  className={`block w-full pl-12 pr-4 py-4 border-2 text-slate-800 bg-white/50 backdrop-blur-sm ${
+                    errors.contactNumber
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-orange-400"
+                  } rounded-2xl focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all duration-200 placeholder:text-slate-400`}
+                />
+              </div>
+              {errors.contactNumber && (
+                <p className="mt-2 text-sm text-red-500 flex items-center space-x-1">
+                  <span className="w-4 h-4 text-red-500">⚠</span>
+                  <span>{errors.contactNumber}</span>
+                </p>
+              )}
+              <p className="mt-1 text-xs text-slate-500">
+                Your number will be shared with potential donors
+              </p>
+            </div>
+
             {/* Blood Group Field */}
             <div className="group">
               <label
@@ -236,7 +296,7 @@ export default function ContactFormCard() {
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
-                  placeholder="Enter your location"
+                  placeholder="Hospital name with complete address"
                   className={`block w-full pl-12 pr-4 py-4 border-2 text-slate-800 bg-white/50 backdrop-blur-sm ${
                     errors.location
                       ? "border-red-400 focus:border-red-500"
@@ -244,6 +304,10 @@ export default function ContactFormCard() {
                   } rounded-2xl focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all duration-200 placeholder:text-slate-400`}
                 />
               </div>
+              <p className="mt-1 text-xs text-slate-500">
+                Enter Hospital name with complete address where blood donation
+                is needed
+              </p>
               {errors.location && (
                 <p className="mt-2 text-sm text-red-500 flex items-center space-x-1">
                   <span className="w-4 h-4 text-red-500">⚠</span>
