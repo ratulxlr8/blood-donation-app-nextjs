@@ -154,7 +154,7 @@ export default function ContactFormCard() {
                 htmlFor="contactNumber"
                 className="block text-sm font-semibold text-slate-800 mb-2 transition-colors group-focus-within:text-orange-600"
               >
-                Your Contact Number
+                Patient's Contact Number
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -180,8 +180,10 @@ export default function ContactFormCard() {
                   <span>{errors.contactNumber}</span>
                 </p>
               )}
-              <p className="mt-1 text-xs text-slate-500">
-                Your number will be shared with potential donors
+              <p className="mt-1 text-xs text-slate-500 mx-2">
+                Please enter the <b>phone number</b> where the <b>patient</b> or
+                their <b>family</b> can be reached. This information is crucial
+                for coordinating the donation.
               </p>
             </div>
 
@@ -255,7 +257,7 @@ export default function ContactFormCard() {
                   <span>{errors.bloodGroup}</span>
                 </p>
               )}
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-slate-500 mx-2">
                 Select the blood group you need for donation
               </p>
             </div>
@@ -304,7 +306,7 @@ export default function ContactFormCard() {
                   } rounded-2xl focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all duration-200 placeholder:text-slate-400`}
                 />
               </div>
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-slate-500 mx-2">
                 Enter Hospital name with complete address where blood donation
                 is needed
               </p>
@@ -462,12 +464,7 @@ export default function ContactFormCard() {
         </div>
 
         {/* Footer Section */}
-        <div className="bg-gradient-to-r from-slate-50 to-orange-50 border-t border-slate-100 px-8 py-6 text-center">
-          <div className="flex items-center justify-center space-x-2 text-slate-600">
-            <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
-            <p className="text-sm font-medium">{`We'll respond within 24 hours`}</p>
-            <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
-          </div>
+        <div className="bg-gradient-to-r from-slate-100 to-orange-100 border-t border-slate-100 px-8 py-2 text-center">
           <p className="text-xs text-slate-500 mt-2">
             Powered by{" "}
             <span className="font-semibold text-orange-600">Technonext</span>
