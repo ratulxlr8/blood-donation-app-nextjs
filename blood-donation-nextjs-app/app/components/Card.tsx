@@ -3,6 +3,7 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 export default function ContactFormCard() {
   const [formData, setFormData] = useState({
+    name: "",
     contactNumber: "",
     location: "",
     bloodGroup: "",
@@ -10,6 +11,7 @@ export default function ContactFormCard() {
   });
 
   const [errors, setErrors] = useState({
+    name: "",
     contactNumber: "",
     location: "",
     bloodGroup: "",
@@ -50,11 +52,21 @@ export default function ContactFormCard() {
   const validateForm = () => {
     let valid = true;
     const newErrors = {
+      name: "",
       contactNumber: "",
       location: "",
       bloodGroup: "",
       message: "",
     };
+
+    // Name validation
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+      valid = false;
+    } else if (formData.name.length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+      valid = false;
+    }
 
     // Contact Number validation
     if (!formData.contactNumber.trim()) {
@@ -122,6 +134,7 @@ export default function ContactFormCard() {
 
   const resetForm = () => {
     setFormData({
+      name: "",
       contactNumber: "",
       location: "",
       bloodGroup: "",
@@ -153,6 +166,55 @@ export default function ContactFormCard() {
         {/* Form Section */}
         <div className="p-4">
           <div className="space-y-4">
+            {/* Name Field */}
+            <div className="group">
+              <label
+                htmlFor="name"
+                className="block text-xs font-semibold text-slate-800 mb-1 transition-colors group-focus-within:text-orange-600"
+              >
+                {`  Patient's Name`}
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-slate-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Enter patient's full name"
+                  className={`block w-full pl-10 pr-3 py-3 border-2 text-slate-800 bg-white/50 backdrop-blur-sm ${
+                    errors.name
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-orange-400"
+                  } rounded-xl focus:ring-2 focus:ring-orange-100 focus:outline-none transition-all duration-200 placeholder:text-slate-400 text-sm`}
+                />
+              </div>
+              {errors.name && (
+                <p className="mt-1 text-xs text-red-500 flex items-center space-x-1">
+                  <span className="w-3 h-3 text-red-500">⚠</span>
+                  <span>{errors.name}</span>
+                </p>
+              )}
+              <p className="mt-0.5 text-xs text-slate-500">
+                Full name of the patient who needs blood
+              </p>
+            </div>
+
             {/* Contact Number Field */}
             <div className="group">
               <label
@@ -475,6 +537,11 @@ export default function ContactFormCard() {
 
         {/* Footer Section */}
         <div className="bg-gradient-to-r from-slate-50 to-orange-50 border-t border-slate-100 px-4 py-3 text-center">
+          <div className="flex items-center justify-center space-x-2 text-slate-600">
+            <div className="w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
+            <p className="text-xs font-medium">{`We'll respond within 24 hours`}</p>
+            <div className="w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
+          </div>
           <p className="text-xs text-slate-500 mt-1">
             Powered by{" "}
             <span className="font-semibold text-orange-600">Technonext</span>
